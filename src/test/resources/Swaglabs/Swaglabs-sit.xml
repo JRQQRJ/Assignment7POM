@@ -1,0 +1,9 @@
+<suite name = "Smoke Suite"  thread-count = "4" parallel = "methods">
+    <test name =" Swaglabs" preserve-order=" true">
+        <classes>
+            <class name = "SwaglabsTests.SwagTests">
+            </class>
+        </classes>
+    </test>
+</suite>
+
