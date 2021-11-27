@@ -1,0 +1,19 @@
+{
+
+  "validateLoginFunctionality": [
+
+    {
+      "username": "standard_user",
+      "password": "secret_sauce",
+      "item1": "SauceLabsBackpack",
+      "item2": "SauceLabsFleeceJacket",
+      "firstname": "Tarun",
+      "lastname": "Sachdeva",
+      "zip": "111111"
+
+
+    }
+
+]
+
+}

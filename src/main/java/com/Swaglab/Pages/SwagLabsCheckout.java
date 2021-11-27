@@ -1,54 +1,42 @@
 package com.Swaglab.Pages;
 
+import com.automationbytarun.components.BaseActions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
-public class SwagLabsCheckout {
+public class SwagLabsCheckout extends BaseActions {
 
         WebDriver driver;
 
-        @FindBy(xpath = "//div[@class = 'summary_value_label' and contains(text(),'PONY')]")
-        WebElement shippingInfo;
-
-        @FindBy(xpath = "//div[@id=\"checkout_summary_container\"]/div/div[2]/div[contains(text(), 'SauceCard')]")
-        WebElement paymentInfo;
-
-        @FindBy(xpath = "//a[@id = 'item_4_title_link']/following-sibling::div[2]//child::div")
-        WebElement item1Price;
-
-        @FindBy(xpath = "//a[@id = 'item_5_title_link']/following-sibling::div[2]//child::div")
-        WebElement item2Price;
-
-        @FindBy(xpath = "//div[@class=\"summary_info\"]//child::div[@class = 'summary_subtotal_label']")
-        WebElement itemTotalPrice;
-
-        @FindBy(css = "#finish")
-        WebElement btn_finish;
-
          public SwagLabsCheckout(WebDriver driver){
-            this.driver=driver;
-            PageFactory.initElements(driver, this);
+             super(driver);
+             this.driver=driver;
         }
 
-        public void checkPoiny4() throws InterruptedException {
-
-            Assert.assertEquals(shippingInfo.getText(),"FREE PONY EXPRESS DELIVERY!", "Invalid Shipping Information");
-            Assert.assertEquals(paymentInfo.getText(),"SauceCard #31337", "Invalid Payment Information");
-            Float itemPrice1 = Float.valueOf(item1Price.getText().substring(1,6));
-            Float itemPrice2 = Float.valueOf(item2Price.getText().substring(1,6));
-            Float total = Float.valueOf(itemTotalPrice.getText().substring(13,18));
-            if(total == (itemPrice1+itemPrice2)){
-              System.out.println("The total displayed is correct");
-          }else
-                System.out.println("Incorrect total");
+        public SwagLabsCheckout checkPoiny4() throws InterruptedException {
+            String shippingInfo = getTextFromElement("SwagLabsCheckout.shippingInfo") ;
+            Assert.assertEquals(shippingInfo,"FREE PONY EXPRESS DELIVERY!", "Invalid Shipping Information");
+            String paymentInfo = getTextFromElement("SwagLabsCheckout.paymentInfo") ;
+            Assert.assertEquals(paymentInfo,"SauceCard #31337", "Invalid Payment Information");
+            String item1Price = getTextFromElement("SwagLabsCheckout.item1Price") ;
+            System.out.println(item1Price);
+            Float  itemPrice1 = Float.valueOf(item1Price.substring(1,6));
+            String item2Price = getTextFromElement("SwagLabsCheckout.item2Price") ;
+            Float  itemPrice2 = Float.valueOf(item2Price.substring(1,6));
+            String itemTotalPrice = getTextFromElement("SwagLabsCheckout.itemTotalPrice") ;
+            Float total = Float.valueOf(itemTotalPrice.substring(13,18));
+            return this;
 
         }
 
-        public void clickFinishButton(){
-             btn_finish.click();
+        public SwagLabsCheckout clickFinishButton() throws InterruptedException {
+
+             clickIt("SwagLabsCheckout.btn_finish");
+            Thread.sleep(3000);
+            return this;
         }
 
     }

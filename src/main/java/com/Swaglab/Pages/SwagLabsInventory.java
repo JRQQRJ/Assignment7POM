@@ -1,60 +1,44 @@
 package com.Swaglab.Pages;
 
+import com.automationbytarun.components.BaseActions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
-public class SwagLabsInventory {
+public class SwagLabsInventory extends BaseActions {
 
         WebDriver driver;
-
-        String checkpoint1Value,Checkpoint2Value;
-
-        @FindBy(xpath= "//button[@id=\"add-to-cart-sauce-labs-backpack\" and @class= 'btn btn_primary btn_small btn_inventory' ]")
-        WebElement addSauceLabsBackpackToCart;
-
-        @FindBy(css = "#add-to-cart-sauce-labs-fleece-jacket")
-        WebElement addSauceLabsFleeceJacketToCart;
-
-        @FindBy(xpath= "//div[@id=\"shopping_cart_container\"]//child::a//child::span")
-        WebElement cartIconValue;
-
-        @FindBy(xpath= "//div[@id=\"shopping_cart_container\"]//child::a")
-        WebElement cartIcon;
+        static int cartTotal=0;
 
         public SwagLabsInventory(WebDriver driver){
+            super(driver);
             this.driver=driver;
-            PageFactory.initElements(driver, this);
+        }
+        public SwagLabsInventory clickAddToCartItem1() throws InterruptedException {
+        clickIt("SwagLabsInventory.btn_SauceLabsBackpack");
+        cartTotal=cartTotal+1;
+        return this;
         }
 
-        public void clickAddToCart(String input) throws InterruptedException {
+        public SwagLabsInventory clickAddToCartItem2() throws InterruptedException {
+        clickIt("SwagLabsInventory.btn_SauceLabsFleeceJacket");
+        cartTotal=cartTotal+1;
+        return this;
+    }
 
-            if(input == "SauceLabsBackpack"){
-                addSauceLabsBackpackToCart.click();
-            Thread.sleep(3000);}
-
-            else if(input == "SauceLabsFleeceJacket"){
-                addSauceLabsFleeceJacketToCart.click();
+        public SwagLabsInventory checkpoint1(){
+            String cartItems =getTextFromElement("SwagLabsInventory.icon_cartValue");
+            if(cartItems.contains(String.valueOf(cartTotal))) {
             }
+            return this;
 
         }
 
-        public void checkpoint1(){
-            Assert.assertTrue(cartIconValue.isDisplayed());
-            this.checkpoint1Value= cartIconValue.getText();
-        }
-
-        public void checkpoint2(){
-            Assert.assertTrue(cartIconValue.isDisplayed());
-            this.Checkpoint2Value= cartIconValue.getText();
-            Assert.assertTrue(this.Checkpoint2Value!=this.checkpoint1Value,"Add to cart function unsuccessfull");
-
-        }
-
-        public void clickOnCartIcon(){
-            cartIcon.click();
+        public SwagLabsInventory clickOnCartIcon() throws InterruptedException {
+            clickIt("SwagLabsInventory.icon_cart");
+            return this;
         }
 
 
